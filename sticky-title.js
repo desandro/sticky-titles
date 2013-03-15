@@ -3,6 +3,11 @@
 'use strict';
 
 var getSize = window.getSize;
+var getStyleProperty = window.getStyleProperty;
+
+var transformProp = getStyleProperty('transform');
+
+// -------------------------- StickyTitle -------------------------- //
 
 function StickyTitle( elem ) {
   this.element = elem;
@@ -29,7 +34,6 @@ StickyTitle.prototype.measure = function() {
 StickyTitle.prototype.stick = function() {
   this.element.style.position = 'fixed';
   this.element.style.top = 0;
-  this.element.style.left = 0;
   // this.element.style.zIndex = 10;
 
   this.spacer.style.height = this.size.height + 'px';
@@ -38,11 +42,12 @@ StickyTitle.prototype.stick = function() {
 };
 
 StickyTitle.prototype.unstick = function() {
+  // return element to relative positioning
   this.element.style.position = 'relative';
   this.element.style.top = '';
-  this.element.style.left = '';
-  this.element.style.webkitTransform = '';
-  // this.element.style.zIndex = '';
+  if ( transformProp ) {
+    this.element.style[ transformProp ] = '';
+  }
   this.spacer.style.height = 0;
 };
 
@@ -53,7 +58,13 @@ StickyTitle.prototype.offset = function( nextTitle ) {
   if ( offset === this._offset ) {
     return;
   }
-  this.element.style.webkitTransform = 'translateY(' +  -offset + 'px)';
+
+  if ( transformProp ) {
+    this.element.style[ transformProp ] = 'translateY(' +  -offset + 'px)';
+  } else {
+    this.element.style.top = -offset + 'px';
+  }
+
   this._offset = offset;
 };
 
