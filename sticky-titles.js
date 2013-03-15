@@ -82,6 +82,14 @@ StickyTitles.prototype.onscroll = function() {
   // console.log( window.scrollY );
   var scrollY = window.scrollY;
 
+
+  var firstTitle = this.titles[0];
+  var isFirstTitleStuck = firstTitle && this.stuckTitle === firstTitle;
+  if ( isFirstTitleStuck && scrollY < firstTitle.top ) {
+    this.unstickTitle( firstTitle );
+    return;
+  }
+
   for ( var i=0, len = this.titles.length; i < len; i++ ) {
     var title = this.titles[i];
     var previousTitle = i  && this.titles[ i - 1 ];
