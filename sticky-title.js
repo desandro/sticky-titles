@@ -30,6 +30,7 @@ StickyTitle.prototype.stick = function() {
   this.element.style.position = 'fixed';
   this.element.style.top = 0;
   this.element.style.left = 0;
+  // this.element.style.zIndex = 10;
 
   this.spacer.style.height = this.size.height + 'px';
   this.spacer.style.marginTop = this.size.marginTop + 'px';
@@ -40,7 +41,20 @@ StickyTitle.prototype.unstick = function() {
   this.element.style.position = 'relative';
   this.element.style.top = '';
   this.element.style.left = '';
+  this.element.style.webkitTransform = '';
+  // this.element.style.zIndex = '';
   this.spacer.style.height = 0;
+};
+
+StickyTitle.prototype.offset = function( nextTitle ) {
+  var gap = nextTitle.top - window.scrollY;
+  var offset = this.size.height - gap;
+  offset = Math.max( offset, 0 );
+  if ( offset === this._offset ) {
+    return;
+  }
+  this.element.style.webkitTransform = 'translateY(' +  -offset + 'px)';
+  this._offset = offset;
 };
 
 // --------------------------  -------------------------- //

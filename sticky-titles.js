@@ -59,6 +59,10 @@ StickyTitles.prototype.measure = function() {
 };
 
 StickyTitles.prototype.stickTitle = function( title ) {
+  // don't stick if the same
+  if ( title === this.stuckTitle ) {
+    return;
+  }
   this.unstickTitle();
   title.stick();
   this.stuckTitle = title;
@@ -80,8 +84,13 @@ StickyTitles.prototype.onscroll = function() {
 
   for ( var i=0, len = this.titles.length; i < len; i++ ) {
     var title = this.titles[i];
-    if ( scrollY >= title.top && scrollY <= title.bottom ) {
+    var previousTitle = i  && this.titles[ i - 1 ];
+    var nextTitle = i < len - 1 && this.titles[ i + 1 ];
+    if ( scrollY >= title.top && scrollY <= nextTitle.top ) {
       this.stickTitle( title );
+      title.offset( nextTitle );
+      // var gap = nextTitle.top - scrollY;
+      // title.offset( nextTitle.top - scrollY );
       break;
     }
   }
