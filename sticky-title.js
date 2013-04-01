@@ -9,6 +9,8 @@ var transformProp = getStyleProperty('transform');
 
 // -------------------------- StickyTitle -------------------------- //
 
+// singular class for each title
+
 function StickyTitle( elem ) {
   this.element = elem;
   this._create();
@@ -70,6 +72,9 @@ StickyTitle.prototype.offset = function( nextTitle ) {
 
 // --------------------------  -------------------------- //
 
-window.StickyTitle = StickyTitle;
+// create global namespace, add Title to it
+window.StickyTitles = {
+  Title: StickyTitle
+};
 
 })( window );

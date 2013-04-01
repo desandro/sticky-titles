@@ -1,8 +1,14 @@
+/*!
+ * StickTitles
+ * iOS-like titles that sticky, but scroll
+ * http://github.com/desandro/sticky-titles
+**/
+
 ( function( window ) {
 
 'use strict';
 
-var StickyTitle = window.StickyTitle;
+var StickyTitle = window.StickyTitles.Title;
 
 // turn element or nodeList into an array
 function makeArray( obj ) {
@@ -18,6 +24,10 @@ function makeArray( obj ) {
   }
   return ary;
 }
+
+// -------------------------- StickyTitles -------------------------- //
+
+// class for titles collection
 
 function StickyTitles( elems ) {
   this.titles = [];
@@ -82,7 +92,6 @@ StickyTitles.prototype.onscroll = function() {
   // console.log( window.scrollY );
   var scrollY = window.scrollY;
 
-
   var firstTitle = this.titles[0];
   var isFirstTitleStuck = firstTitle && this.stuckTitle === firstTitle;
   if ( isFirstTitleStuck && scrollY < firstTitle.top ) {
@@ -92,7 +101,7 @@ StickyTitles.prototype.onscroll = function() {
 
   for ( var i=0, len = this.titles.length; i < len; i++ ) {
     var title = this.titles[i];
-    var previousTitle = i  && this.titles[ i - 1 ];
+    // var previousTitle = i  && this.titles[ i - 1 ];
     var nextTitle = i < len - 1 && this.titles[ i + 1 ];
     if ( scrollY >= title.top && scrollY <= nextTitle.top ) {
       this.stickTitle( title );
@@ -107,6 +116,7 @@ StickyTitles.prototype.onscroll = function() {
 // -------------------------- transport -------------------------- //
 
 window.StickyTitles = StickyTitles;
+StickyTitles.Title = StickyTitle;
 
 })( window );
 
