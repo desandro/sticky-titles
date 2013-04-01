@@ -6,7 +6,7 @@ iOS-like fixed titles that scroll and push up the previous title.
 
 ``` js
 // make all h2 sticky
-new StickTitles( document.querySelectorAll('h2') );
+new StickyTitles( document.querySelectorAll('h2') );
 ```
 
 ## Bower
